@@ -1,0 +1,8 @@
+<h1>hola</h1>
+
+<h1>{{user.username}}</h1>
+
+{% if user.is_mensajero %}
+    
+    <p>Vehículo: {{ user.mensajero.get_vehiculo_display }}</p>
+{% endif %}
