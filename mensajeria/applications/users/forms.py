@@ -3,59 +3,53 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from .models import CustomUser, Cliente, Mensajero
 
-class CustomUserCreationForm(UserCreationForm):
-    class Meta(UserCreationForm.Meta):
+
+
+class CustomClienteCreationForm(forms.ModelForm):
+    password = forms.CharField(widget=forms.PasswordInput)
+    ciudad = forms.CharField(widget = forms.TextInput, required=True)
+    nombreSucursal = forms.CharField(widget = forms.TextInput, required = True)
+    telefonoSucursal = forms.CharField(widget = forms.TextInput, required = True)
+    address = forms.CharField(widget = forms.TextInput, required = True)
+
+    class Meta:
         model = CustomUser
-        fields = UserCreationForm.Meta.fields + ('is_cliente', 'is_mensajero')
+        fields = ['username', 
+                  'direccion', 
+                  'telefono', 
+                  'identificacion', 
+                  'email', 
+                  'imagenPerfil', 
+                  'ciudad', 
+                  'nombreSucursal',
+                  'telefonoSucursal',
+                  'address']  
 
-class ClienteProfileForm(forms.ModelForm):
-    class Meta:
-        model = Cliente
-        fields = ['address']
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['direccion'].required = True
+        self.fields['email'].required = True
+        self.fields['telefono'].required = True
+        self.fields['identificacion'].required = True
+        self.fields['username'].required = True
+        self.fields['imagenPerfil'].required = False
 
-class MensajeroProfileForm(forms.ModelForm):
-    class Meta:
-        model = Mensajero
-        fields = ['vehiculo']
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.set_password(self.cleaned_data['password'])
+        user.is_cliente = True  # Asegurarse de que no sea cliente
+        user.is_mensajero = False  # Marcar como mensajero
 
+        if commit:
+            user.save()
+            ciudad = self.cleaned_data.get('ciudad')
+            if ciudad:
+                Cliente.objects.create(user=user, ciudad = ciudad )
 
-
-
-
-
-from django import forms
-from .models import CustomUser, Mensajero
-
-# class CustomUserCreationForm(forms.ModelForm):
-#     password = forms.CharField(widget=forms.PasswordInput)
-
-#     class Meta:
-#         model = CustomUser
-#         fields = ['username', 'direccion', 'telefono', 'identificacion']  # Excluir 'is_cliente' e 'is_mensajero'
-
-#     def __init__(self, *args, **kwargs):
-#         super().__init__(*args, **kwargs)
-#         self.fields['direccion'].required = True
-#         self.fields['telefono'].required = True
-#         self.fields['identificacion'].required = True
-#         self.fields['username'].required = True
+        return user
 
 
-#     def save(self, commit=True):
-#         user = super().save(commit=False)
-#         user.set_password(self.cleaned_data['password'])
-#         user.is_cliente = False  # Asegurarse de que no sea cliente
-#         user.is_mensajero = True  # Marcar como mensajero
 
-#         if commit:
-#             user.save()
-
-#             # Si se proporciona un vehículo, crear el mensajero
-#             vehiculo = self.cleaned_data.get('vehiculo')
-#             if vehiculo:
-#                 Mensajero.objects.create(user=user, vehiculo=vehiculo)
-
-#         return user
 
 
 
@@ -63,17 +57,22 @@ from .models import CustomUser, Mensajero
 class CustomUserCreationForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput)
     vehiculo = forms.ChoiceField(choices=Mensajero.VEHICULO_CHICES, required=True)
+    placaVehiculo = forms.CharField(widget = forms.TextInput, required=True)
+    imagenPerfil = forms.ImageField(required=False)
 
     class Meta:
         model = CustomUser
-        fields = ['username', 'direccion', 'telefono', 'identificacion', 'vehiculo']  
+        fields = ['username', 'direccion', 'telefono', 'identificacion', 'email', 'vehiculo', 'placaVehiculo', 'imagenPerfil']  
 
     def __init__(self, *args, **kwargs):
+        print("sii")
         super().__init__(*args, **kwargs)
         self.fields['direccion'].required = True
+        self.fields['email'].required = True
         self.fields['telefono'].required = True
         self.fields['identificacion'].required = True
         self.fields['username'].required = True
+        self.fields['imagenPerfil'].required = True
 
     def save(self, commit=True):
         user = super().save(commit=False)
@@ -82,12 +81,23 @@ class CustomUserCreationForm(forms.ModelForm):
         user.is_mensajero = True  
 
         if commit:
+            print("guardando usuario")
             user.save()
             vehiculo = self.cleaned_data['vehiculo']
-            Mensajero.objects.create(user=user, vehiculo=vehiculo)
+            placaVehiculo = self.cleaned_data['placaVehiculo']
+            Mensajero.objects.create(user = user, vehiculo = vehiculo, placaVehiculo = placaVehiculo)
+            
+            if 'imagenPerfil' in self.cleaned_data and self.cleaned_data['imagenPerfil']:
+                user.imagenPerfil = self.cleaned_data['imagenPerfil']
+                user.save()
+                print("imagen si proporcionada")
+            else:
+                print("imagen no proporcionada")
 
         return user
-    
+
+
+# este es el formulario para el Login
 class CustomAuthenticationForm(AuthenticationForm):
     username = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Username'}))
     password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Password'}))
