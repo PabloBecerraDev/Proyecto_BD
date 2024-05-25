@@ -1,9 +1,12 @@
-from pathlib import Path
-import unipath
+#from pathlib import Path
+from unipath import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
+
+# el base_dir que esta comentado, es el que django trae por defecto, pero estamos usando el de la libreria unipath
+# BASE_DIR = Path(__file__).resolve().parent.parent.parent
+BASE_DIR = Path(__file__).ancestor(3)
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-oa9*p1zc9k*)1@10%xg&4nli+ztlh17&6p&b^2$ka@f^bwmbp2'
@@ -36,7 +39,9 @@ ROOT_URLCONF = 'mensajeria.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR/'templates'],
+        # este DIRS tambien lo trae por defecto django, pero estamos usando uno con unipath, igual este tambien sirve 
+        #'DIRS': [BASE_DIR/'templates'],
+        'DIRS': [BASE_DIR.child('templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
