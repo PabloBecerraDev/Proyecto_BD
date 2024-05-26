@@ -2,7 +2,7 @@ from django.contrib.auth.models import BaseUserManager
 from django.db import models
 
 class CustomUserManager(BaseUserManager, models.Manager):
-    def create_user(self, username, direccion, email, telefono, identificacion, imagenPerfil, password=None, is_staff=False, is_superuser=False, **extra_fields):
+    def create_user(self, username, direccion, email, telefono, identificacion, password=None, is_staff=False, is_superuser=False, **extra_fields):
         if not username:
             raise ValueError('El nombre de usuario debe ser proporcionado')
         if not direccion:
@@ -18,7 +18,6 @@ class CustomUserManager(BaseUserManager, models.Manager):
             email = email,
             telefono=telefono,
             identificacion=identificacion,
-            imagenPerfil = imagenPerfil,
             is_staff=is_staff,
             is_superuser=is_superuser,
             **extra_fields
