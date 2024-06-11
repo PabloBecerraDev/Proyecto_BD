@@ -2,10 +2,9 @@
 
 <h1>{{user.username}}</h1>
 
-{% if user.is_mensajero %}
+{% if user.is_cliente %}
     
-    <p>Vehículo: {{ user.mensajero.get_vehiculo_display }}</p>
-    <p>placa: {{ user.mensajero.placaFormato }}</p>
+    <h1>holaaaa soy mensajero</h1>
     
 {% endif %}
     <p>correo: {{ user.email }}</p>

@@ -7,14 +7,15 @@ from .models import CustomUser, Cliente, Mensajero
 
 class CustomClienteCreationForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput)
-    ciudad = forms.CharField(widget = forms.TextInput, required=True)
+    ciudad = forms.Select(attrs={'class': 'form-control'})
     nombreSucursal = forms.CharField(widget = forms.TextInput, required = True)
     telefonoSucursal = forms.CharField(widget = forms.TextInput, required = True)
-    address = forms.CharField(widget = forms.TextInput, required = True)
 
     class Meta:
         model = CustomUser
         fields = ['username', 
+                  'nombres',
+                  'apellidos',
                   'direccion', 
                   'telefono', 
                   'identificacion', 
@@ -23,7 +24,7 @@ class CustomClienteCreationForm(forms.ModelForm):
                   'ciudad', 
                   'nombreSucursal',
                   'telefonoSucursal',
-                  'address']  
+                  ]  
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -43,8 +44,10 @@ class CustomClienteCreationForm(forms.ModelForm):
         if commit:
             user.save()
             ciudad = self.cleaned_data.get('ciudad')
+            nombreSucursal = self.cleaned_data.get('nombreSucursal')
+            telefonoSucursal = self.cleaned_data.get('telefonoSucursal')
             if ciudad:
-                Cliente.objects.create(user=user, ciudad = ciudad )
+                Cliente.objects.create(user=user, nombreSucursal = nombreSucursal, telefonoSucursal = telefonoSucursal )
 
         return user
 
@@ -54,15 +57,18 @@ class CustomClienteCreationForm(forms.ModelForm):
 
 
 
-class CustomUserCreationForm(forms.ModelForm):
+class CustomMensajeroCreationForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput)
-    vehiculo = forms.ChoiceField(choices=Mensajero.VEHICULO_CHICES, required=True)
+    vehiculo = forms.ChoiceField(choices=Mensajero.VEHICULO_CHOICES, required=True)
     placaVehiculo = forms.CharField(widget = forms.TextInput, required=True)
+    ciudad = forms.Select(attrs={'class': 'form-control'})
     imagenPerfil = forms.ImageField(required=False)
 
     class Meta:
         model = CustomUser
-        fields = ['username', 'direccion', 'telefono', 'identificacion', 'email', 'vehiculo', 'placaVehiculo', 'imagenPerfil']  
+        fields = ['username','nombres', 'apellidos', 'direccion', 'telefono', 'identificacion', 
+                  'email', 'vehiculo', 'placaVehiculo', 'imagenPerfil', 'ciudad',
+                  ]  
 
     def __init__(self, *args, **kwargs):
         print("sii")
