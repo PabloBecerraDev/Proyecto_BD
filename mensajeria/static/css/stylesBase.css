@@ -40,7 +40,7 @@ body {
     padding-inline: 1rem;
     font-family: system-ui, sans-serif;
     font-weight: 400;
-    font-size: 1rem;
+    font-size: 16px;;
     text-align: center;
     overflow-x: hidden;
     display: flex;
@@ -180,6 +180,7 @@ footer {
     margin-block: 80vh;
 }
 
+
 .text {
     margin-inline: auto;
     padding-block: 0.2em;
@@ -190,6 +191,7 @@ footer {
     background-clip: text;
     -webkit-background-clip: text;
     color: transparent;
+    font-size: 100px;
 }
 
 @supports (animation-timeline: view()) {
@@ -227,6 +229,18 @@ footer {
 .smile span {
     display: inline-block;
     width: 1em;
+}
+
+.profile {
+    display: inline-block;
+    margin-left: 20px;
+}
+
+.profile-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
 }
 
 @keyframes fade {
@@ -297,4 +311,49 @@ footer {
     50% {
         translate: 0 var(--hover-offset);
     }
+}
+
+.profile-menu {
+    display: none;
+    position: absolute;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+    top: 100%; /* Ajusta la posición del menú desplegable */
+    left: 0;
+}
+
+.profile-menu a {
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+    color: black;
+    transition: background-color 0.3s;
+}
+
+.profile-menu a:hover {
+    background-color: #f1f1f1;
+}
+
+/* Estilos para el link de perfil y su comportamiento */
+.profile-link {
+    cursor: pointer;
+}
+
+.profile {
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+}
+
+.profile-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* Mostrar el menú cuando el checkbox está marcado */
+.profile-menu-toggle:checked + .profile-link + .profile-menu {
+    display: block;
 }

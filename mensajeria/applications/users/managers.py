@@ -39,16 +39,26 @@ class CustomUserManager(BaseUserManager, models.Manager):
         Mensajero.objects.create(user=user, vehiculo=vehiculo)
         return user
     
-    # def create_cliente(self, username, direccion, telefono, identificacion, ciudad, address, password=None):
-    #     extra_fields = {
-    #         'is_cliente': True,
-    #         'is_mensajero': False,
-    #     }
-    #     user = self.create_user(username, direccion, telefono, identificacion, password, **extra_fields)
-        
-    #     from .models import Mensajero
-    #     Mensajero.objects.create(user=user, vehiculo=vehiculo)
-    #     return user
     
-    def create_superuser(self, username, direccion="null", email="null", telefono="null", identificacion="null", password=None, **extra_fields):
+    def clientes(self, nombre=None, tipo=None, ciudad=None):
+        resultado = self.get_queryset()  # Utiliza get_queryset en lugar de all()
+
+        if nombre:
+            resultado = resultado.filter(nombres__icontains=nombre)  
+
+        if tipo == 'C':
+            resultado = resultado.filter(is_cliente=True)
+        elif tipo == 'M':
+            resultado = resultado.filter(is_mensajero=True)
+
+        if ciudad:
+            resultado = resultado.filter(ciudad=ciudad)
+
+        return resultado
+        
+
+
+
+
+    def create_superuser(self, username, direccion=" ", email=" ", telefono=" ", identificacion=" ", password=None, **extra_fields):
         return self.create_user(username, direccion, email, telefono, identificacion, password, True, True, **extra_fields)

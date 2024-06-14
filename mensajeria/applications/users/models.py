@@ -11,9 +11,9 @@ class CustomUser(AbstractUser, PermissionsMixin):
     nombres = models.CharField(max_length = 100, blank = True)
     apellidos = models.CharField(max_length = 100, blank = True)
     username = models.CharField(max_length = 25, unique = True)
-    direccion = models.CharField(max_length = 60, blank=True, default = "NULL")
+    direccion = models.CharField(max_length = 60, blank=True, default = "")
     email = models.EmailField(unique=False)
-    telefono = models.CharField(max_length = 20, blank=True, default = "NULL")
+    telefono = models.CharField(max_length = 20, blank=True, default = "")
     identificacion = models.CharField(max_length = 20)
     imagenPerfil = models.ImageField(upload_to='perfil_imagenes/', blank=False, null=True)
     
