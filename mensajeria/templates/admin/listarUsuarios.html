@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Lista de Usuarios{% endblock %}
+
+{% block extra_css %}
+    <style>
+        /* Estilos adicionales específicos para esta página si es necesario */
+    </style>
+{% endblock %}
+
+{% block content %}
+    <section>
+        <div class="form-container">
+            <h2 class="text">Filtrar Usuarios</h2>
+            <form method="get" >
+                {% csrf_token %}
+                {{ form.non_field_errors }}
+                {% for field in form %}
+                    <div class="form-group">
+                        {{ field.label_tag }}
+                        {{ field }}
+                        {% if field.errors %}
+                            <div class="error-message">{{ field.errors }}</div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+                <button type="submit" >Crear Cliente</button>
+            </form>
+        </div>
+
+        <div class="user-list">
+            {% if usuarios %}
+                <ul>
+                    {% for usuario in usuarios %}
+                        <li>{{ usuario.nombres }} {{ usuario.apellidos }} - {{ usuario.get_ciudad_display }}</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No se encontraron usuarios que cumplan con los criterios de búsqueda.</p>
+            {% endif %}
+        </div>
+    </section>
+{% endblock %}

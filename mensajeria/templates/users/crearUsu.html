@@ -1,14 +1,23 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Crear Mensajero</title>
-</head>
-<body>
-    <h2>Crear Mensajero</h2>
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Crear</button>
-    </form>
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block title %}Crear Mensajero{% endblock %}
+
+{% block content %}
+    <div class="form-container">
+        <h2 class="text">Crear Mensajero</h2>
+        <form method="post" enctype= multipart/form-data>
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+            {% for field in form %}
+                <div class="form-group">
+                    {{ field.label_tag }}
+                    {{ field }}
+                    {% if field.errors %}
+                        <div class="error-message">{{ field.errors }}</div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+            <button type="submit" >Crear Cliente</button>
+        </form>
+    </div>
+{% endblock %}

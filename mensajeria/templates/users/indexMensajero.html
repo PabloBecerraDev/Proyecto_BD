@@ -1,3 +1,10 @@
+{% extends 'base.html' %}
+
+{% block title %}aaa Page{% endblock %}
+
+{% block content %}
+<h2>Welcome to the Home Page</h2>
+<p>This is the home page content.</p>
 <h1>hola</h1>
 
 <h1>{{user.username}}</h1>
@@ -10,3 +17,18 @@
 {% endif %}
     <p>correo: {{ user.email }}</p>
     <img src="{{ user.imagenPerfil.url }}" alt="Imagen de perfil de {{ user.username }}" style="height: 215px; width: 150px;">
+{% endblock %}
+
+
+<!-- <h1>hola</h1>
+
+<h1>{{user.username}}</h1>
+
+{% if user.is_mensajero %}
+    
+    <p>Vehículo: {{ user.mensajero.get_vehiculo_display }}</p>
+    <p>placa: {{ user.mensajero.placaFormato }}</p>
+    
+{% endif %}
+    <p>correo: {{ user.email }}</p>
+    <img src="{{ user.imagenPerfil.url }}" alt="Imagen de perfil de {{ user.username }}" style="height: 215px; width: 150px;"> -->

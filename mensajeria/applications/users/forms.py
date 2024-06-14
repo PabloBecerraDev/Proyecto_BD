@@ -34,6 +34,9 @@ class CustomClienteCreationForm(forms.ModelForm):
         self.fields['identificacion'].required = True
         self.fields['username'].required = True
         self.fields['imagenPerfil'].required = False
+        self.fields['imagenPerfil'].label = 'Imagen de perfil'
+        self.fields['nombreSucursal'].label = 'Nombre de sucursal'
+        self.fields['telefonoSucursal'].label = 'Telefono de sucursal'
 
     def save(self, commit=True):
         user = super().save(commit=False)
@@ -79,6 +82,8 @@ class CustomMensajeroCreationForm(forms.ModelForm):
         self.fields['identificacion'].required = True
         self.fields['username'].required = True
         self.fields['imagenPerfil'].required = True
+        self.fields['imagenPerfil'].label = 'Imagen de perfil'
+        self.fields['placaVehiculo'].label = 'Placa de vehiculo (abc123)'
 
     def save(self, commit=True):
         user = super().save(commit=False)
@@ -108,3 +113,54 @@ class CustomAuthenticationForm(AuthenticationForm):
     username = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Username'}))
     password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Password'}))
     #prueba2 - 1234
+
+
+
+class UpdateUserForm(forms.ModelForm):
+    class Meta:
+        model = CustomUser
+        fields = ['direccion', 'email', 'telefono', 'imagenPerfil', 'ciudad']
+        widgets = {
+            'direccion': forms.TextInput(attrs={'class': 'form-control'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control'}),
+            'telefono': forms.TextInput(attrs={'class': 'form-control'}),
+            'ciudad': forms.Select(attrs={'class': 'form-control'}),
+        }
+
+    def clean(self):
+        cleaned_data = super().clean()
+        direccion = cleaned_data.get("direccion")
+        email = cleaned_data.get("email")
+        telefono = cleaned_data.get("telefono")
+        ciudad = cleaned_data.get("ciudad")
+        imagenPerfil = cleaned_data.get("imagenPerfil")
+        if not direccion:
+            raise forms.ValidationError("Ingresa una direccion.")
+        if not email:
+            raise forms.ValidationError("Ingresa un email.")
+        if not telefono:
+            raise forms.ValidationError("Ingresa un telefono.")
+        if not ciudad:
+            raise forms.ValidationError("Ingresa una ciudad.")
+        
+
+class UserFilter(forms.Form):
+
+    TIPO_CHOICES = (
+        ('','Todos'),
+        ('C', 'Cliente'),
+        ('M', 'Mensajero'),
+    )
+
+    CIUDAD_CHOICES = (
+        ('', 'Todas'),
+        ('C', 'Santiago de Cali'),
+        ('B', 'Bogota'),
+        ('M', 'Medellin'),
+        ('P', 'Pereira'),
+    )
+
+    tipo = forms.ChoiceField(choices = TIPO_CHOICES, required = False, label = "Tipo de usuario")
+    nombre = forms.CharField(max_length = 150, required = False, label = 'Nombre usuario')
+    ciudad = forms.ChoiceField(choices = CIUDAD_CHOICES, required = False, label = "Ciudad")
+ 
