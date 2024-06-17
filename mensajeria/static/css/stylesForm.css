@@ -1,0 +1,67 @@
+/* Formulario específico */
+.form-container {
+    max-width: 800px; /* Ajuste el ancho máximo según sea necesario */
+    margin: 50px auto;
+    padding: 20px;
+    background: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+.form-container form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.form-container .form-group {
+    flex: 1 1 calc(50% - 20px);
+    display: flex;
+    flex-direction: column;
+}
+
+.form-container .form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.form-container .form-group input,
+.form-container .form-group select,
+.form-container .form-group textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.form-container .form-group input:focus,
+.form-container .form-group select:focus,
+.form-container .form-group textarea:focus {
+    border-color: var(--c3);
+    outline: none;
+}
+
+.form-container .form-group .error-message {
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+.form-container button {
+    padding: 10px 15px;
+    border: none;
+    background-color: var(--c3);
+    color: rgb(0, 0, 0);
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background 0.3s ease;
+    width: calc(100% - 20px); /* Botón a mitad de ancho */
+    align-self: flex-end; /* Alineación derecha */
+}
+
+.form-container button:hover {
+    background-color: var(--c2);
+}
