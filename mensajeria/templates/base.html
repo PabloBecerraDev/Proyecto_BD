@@ -22,9 +22,9 @@
                     <a href="#testimonials">Testimonios</a>
                     <a href="#contact">Contacto</a>
                     {% if user.is_authenticated and user.is_mensajero %}
-                        <a href="#gestionar-servicio">Gestionar Servicio</a>
-                        <a href="#aceptar-servicio">Aceptar Servicio</a>
-                        <a href="#historial-servicios">Historial de Servicios</a>
+                        <a href="{% url 'servicios_app:gestionarServicio' %}">Gestionar Servicio</a>
+                        <a href="{% url 'servicios_app:listar_servicios_mensajero' %}">Aceptar Servicio</a>
+                        <a href="{% url 'servicios_app:historialMensajero' %}">Historial de Servicios</a>
                         <a href="{% url 'updateUser' user.id%}">Actualizar Perfil</a>
                         <a href="{% url 'logout' %}">Logout</a>
                         <div class="profile">
@@ -36,9 +36,9 @@
                             
                         </div>
                     {% elif user.is_authenticated and user.is_cliente %}
-                        <a href="#gestionar-servicio">Solicitar servicio</a>
-                        <a href="#aceptar-servicio">Estado de servicio</a>
-                        <a href="#historial-servicios">Historial de Servicios</a>
+                        <a href="{% url 'servicios_app:crear_servicio' %}">Solicitar servicio</a>
+                        <a href="{% url 'servicios_app:listar_servicio' %}">Estado de servicio</a>
+                        <a href="{% url 'servicios_app:historialCliente' %}">Historial de Servicios</a>
                        
                         <a href="{% url 'updateUser' user.id%}">Actualizar Perfil</a>
                         <a href="{% url 'logout' %}">Logout</a>
@@ -51,7 +51,7 @@
                         </div>
                     {% elif user.is_authenticated and user.is_staff %}
                     <a href="{% url 'listUser'}">Ver Usuarios</a>
-                    <a href="{% url 'listUser'}">Ver domicilios</a>
+                    <a href="{% url 'servicios_app:admin_servicio_list' %}">Ver domicilios</a>
                     <a href="{% url 'updateUser' user.id%}">Actualizar Perfil</a>
                     <a href="{% url 'logout' %}">Logout</a>
                     <a href="#historial-servicios">Generar informe</a>
@@ -65,8 +65,8 @@
 
 
                     {% else %}
-                        <a href="{% url 'create_cliente' %}">Crear cliente</a>
-                        <a href="{% url 'create_mensajero' %}">Crear mensajero</a>
+                        <a href="{% url 'create_cliente' %}">Registrate</a>
+                        <a href="{% url 'create_mensajero' %}">¡Trabaja con nosotros!</a>
                         <a href="{% url 'login' %}">Login</a>
                     {% endif %}
                 </div>

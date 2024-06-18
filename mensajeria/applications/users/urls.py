@@ -9,10 +9,6 @@ from .views import (MensajeroCreateView,
                     indexAdminTemplateView,
                     ListUserView)
 
-
-
-
-
 urlpatterns = [
     path('create-mensajero/', MensajeroCreateView.as_view(), name='create_mensajero'),
     path('create-cliente/', ClienteCreateView.as_view(), name='create_cliente'),

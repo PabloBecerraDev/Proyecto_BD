@@ -3,10 +3,9 @@ from django.conf import settings
 import requests
 from django.core.exceptions import ValidationError
 from applications.users.models import CustomUser
-
+from .managers import ManajerServicios
 
 # Create your models here.
-
 
 class Direccion(models.Model):
     direccion = models.CharField(max_length=300)
@@ -73,8 +72,6 @@ class Direccion(models.Model):
         # Llama al método save original para guardar el objeto
         super().save(*args, **kwargs)
 
-
-
 class Servicio(models.Model):
     id_cliente = models.ForeignKey(CustomUser, 
                                    on_delete=models.CASCADE, 
@@ -112,7 +109,7 @@ class Servicio(models.Model):
 
 
     objects = models.Manager()  
-    # servicios_cliente = ManajerServicios()  tienes que crear este manager fernando
+    servicios_cliente = ManajerServicios()  
 
 
     class Meta:
