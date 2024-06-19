@@ -17,6 +17,17 @@ Sigue estos pasos para levantar el contenedor con Django utilizando Docker Compo
 
 Primero, clona este repositorio en tu máquina local:
 
-```sh
-git clone https://github.com/tu_usuario/tu_repositorio.git
-cd tu_repositorio
+git clone https://github.com/pabloMBDTF/Proyecto_BD.git
+cd Proyecto_BD
+
+### 2. Levantar el contenedor
+
+Situate en la raiz del proyecto, luego pon el siguiente comando:
+
+docker-compose up --build
+
+### 3. Crear SuperUser
+
+Accede a la terminal del proyecto docker y coloca el siguiente comando:
+
+python manage.py createsuperuser
