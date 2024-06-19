@@ -81,7 +81,7 @@ class CustomMensajeroCreationForm(forms.ModelForm):
         self.fields['telefono'].required = True
         self.fields['identificacion'].required = True
         self.fields['username'].required = True
-        self.fields['imagenPerfil'].required = True
+        self.fields['imagenPerfil'].required = False
         self.fields['imagenPerfil'].label = 'Imagen de perfil'
         self.fields['placaVehiculo'].label = 'Placa de vehiculo (abc123)'
 

@@ -43,6 +43,7 @@ class ServicioEstadoForm(forms.ModelForm):
         
         #if commit:
         #    servicio.save()
+        servicio.save()
         
         return servicio
     

@@ -17,6 +17,7 @@ class ManajerServicios(models.Manager):
         return self.filter(id_cliente = cliente, is_complete = True)
 
     def get_servicio_actual(self, mensajero):
+        print("hola")
         return self.filter(id_mensajero = mensajero, is_complete = False).order_by('id').first()
     
     def tieneServicio(self, mensajero):

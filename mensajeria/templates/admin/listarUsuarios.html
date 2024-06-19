@@ -33,7 +33,7 @@
             {% if usuarios %}
                 <ul>
                     {% for usuario in usuarios %}
-                        <li>{{ usuario.nombres }} {{ usuario.apellidos }} - {{ usuario.get_ciudad_display }}</li>
+                        <li>{{ usuario.nombres }} {{ usuario.apellidos }} - {{ usuario.get_ciudad_display }} <button class="btn btn-primary"><a href="{% url 'servicios_app:generarReporte' usuario.id %}">Informe</a></button></li>
                     {% endfor %}
                 </ul>
             {% else %}

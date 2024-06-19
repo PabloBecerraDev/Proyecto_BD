@@ -29,6 +29,9 @@ class CustomUser(AbstractUser, PermissionsMixin):
 
     #se pueden poner funciones aca normal 
 
+    def getCiudad(self):
+        self.get_ciudad_display()
+
     objects = CustomUserManager()
 
     def __str__(self):
@@ -55,6 +58,9 @@ class Mensajero(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, primary_key=True)
     vehiculo = models.CharField(max_length=1 , choices = VEHICULO_CHOICES, blank = True)
     placaVehiculo = models.CharField(max_length = 6, blank = True)
+
+    def getVehiculo(self):
+        self.get_vehiculo_display()
 
     def __str__(self):
         return self.user.username

@@ -103,6 +103,11 @@ class Servicio(models.Model):
         ('E', 'Tu envío ha sido entregado.'),
     )
     estados = models.CharField(max_length=1, choices=SERVICIO_ESTADOS, blank=True)
+
+    def getEstado(self):
+        return self.get_estados_display()
+
+
     descripcion = models.CharField(max_length=300, null=False, blank=False)
     is_complete = models.BooleanField(blank = True, null = True, default = False)
     fecha_creacion = models.DateTimeField(auto_now_add=True)
