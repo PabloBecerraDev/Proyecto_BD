@@ -1,5 +1,7 @@
 from django.urls import path
-from .views import( CrearServicioView, VerServiciosCliente, HistorialServiciosClienteView, ServiciosDisponiblesParaMensajeroView, AceptarServicioView, GestionarServicioView, CompletarServicioView, HistorialServiciosMensajeroView, ServicioListView)
+from .views import( CrearServicioView, VerServiciosCliente, HistorialServiciosClienteView, 
+                   ServiciosDisponiblesParaMensajeroView, AceptarServicioView, GestionarServicioView, 
+                   CompletarServicioView, HistorialServiciosMensajeroView, ServicioListView, generarReporte)
 
 app_name = "servicios_app"
 
@@ -14,5 +16,5 @@ urlpatterns = [
     path('historialMensajero/', HistorialServiciosMensajeroView.as_view(), name='historialMensajero'),
     path('listarServiciosAdmin/', ServicioListView.as_view(), name='admin_servicio_list'),
     
-    #path('reporte/', generar_reporte, name='generar_reporte'),
+    path('reporte/<int:usuario_id>/', generarReporte, name='generarReporte'),
 ]

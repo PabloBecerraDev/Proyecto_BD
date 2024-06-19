@@ -16,7 +16,7 @@ urlpatterns = [
     path('indexMensajero/', indexMensajeroTemplateView.as_view(), name='indexMensajero'),
     path('indexCliente/', indexClienteTemplateView.as_view(), name='indexCliente'),
     path('indexAdmin/', indexAdminTemplateView.as_view(), name='indexAdmin'),
-    path('listUser/', ListUserView.as_view(), name='listUser'),
+    path('listUser/', ListUserView.as_view(), name='list_user'),
     path('updateUser/<int:pk>/', UserUpdateView.as_view(), name='updateUser'),
     path('logout/', logout_view, name='logout'),
     # Otras rutas...
