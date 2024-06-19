@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}Crear Cliente{% endblock %}
+
+{% block content %}
+    <div class="form-container">
+        <h1>Registrarse</h2>
+        <form method="post" enctype= multipart/form-data>
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+            {% for field in form %}
+                <div class="form-group">
+                    {{ field.label_tag }}
+                    {{ field }}
+                    {% if field.errors %}
+                        <div class="error-message">{{ field.errors }}</div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+            <button type="submit" >Aceptar</button>
+        </form>
+    </div>
+{% endblock %}
+

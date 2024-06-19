@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %}Aceptar Servicio{% endblock %}
+
+{% block content %}
+    <div class="form-container">
+        <h2>Servicios Disponibles</h2>
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Descripción</th>
+                    <th>Vehículo Solicitado</th>
+                    <th>Dirección de Recogida</th>
+                    <th>Dirección de Destino</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for servicio in servicios %}
+                    <tr>
+                        <td>{{ servicio.id }}</td>
+                        <td>{{ servicio.descripcion }}</td>
+                        <td>{{ servicio.get_vehiculoSolicitado_display }}</td>
+                        <td>{{ servicio.direccion_recojer.direccion }}</td>
+                        <td>{{ servicio.direccion_destino.direccion }}</td>
+                        <td>{{ servicio.get_estados_display }}</td>
+                        <td>
+                            <form method="post" action="{% url 'servicios_app:aceptar_servicio' servicio.id %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-success">Aceptar</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="7" class="text-center">No hay servicios disponibles</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

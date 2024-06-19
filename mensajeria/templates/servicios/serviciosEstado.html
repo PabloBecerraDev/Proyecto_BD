@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}Estado de servicio{% endblock %}
+
+{% block content %}
+    <div class="form-container">
+        <h2>Estados de los servicios</h2>
+        <div class="container">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Estado del Servicio</th>
+                        <th>Descripción</th>
+                        <th>Vehículo Solicitado</th>
+                        <th>Mensajero</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for servicio in servicios %}
+                    <tr>
+                        <td>{{ servicio.get_estados_display }}</td>
+                        <td>{{ servicio.descripcion }}</td>
+                        <td>{{ servicio.get_vehiculoSolicitado_display }}</td>
+                        {% if servicio.id_mensajero %}
+                            <td>{{ servicio.id_mensajero.username }}</td>
+                        {% else %}
+                            <td>sin asignacion</td>
+                        {% endif %}
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

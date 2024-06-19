@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+
+{% block title %}Crear Cliente{% endblock %}
+
+{% block content %}
+    <div class="container mt-4">
+        <h1>Lista de Servicios</h1>
+        <form method="get" class="form-inline mb-4">
+
+            <div class="form-group mr-2">
+                <label for="{{ form.ciudad_ida.id_for_label }}" class="mr-2">Ciudad Ida</label>
+                {{ form.ciudad_ida }}
+                <div class="text-danger">{{ form.errors.ciudad_ida }}</div>
+            </div>
+        
+            <div class="form-group mr-2">
+                <label for="{{ form.ciudad_llegada.id_for_label }}" class="mr-2">Ciudad destino</label>
+                {{ form.ciudad_llegada }}
+                <div class="text-danger">{{ form.errors.ciudad_llegada }}</div>
+            </div>
+        
+            <div class="form-group mr-2">
+                <label for="{{ form.is_complete.id_for_label }}" class="mr-2">Completado</label>
+                {{ form.is_complete }}
+                <div class="text-danger">{{ form.errors.is_complete }}</div>
+            </div>
+        
+            <div class="form-group mr-2">
+                <label for="{{ form.fecha_creacion.id_for_label }}" class="mr-2">Fecha de Creación</label>
+                {{ form.fecha_creacion }}
+                <div class="text-danger">{{ form.errors.fecha_creacion }}</div>
+            </div>
+        
+            <button type="submit" class="btn btn-primary">Filtrar</button>
+        </form>
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Cliente</th>
+                    <th>Mensajero</th>
+                    <th>Vehículo</th>
+                    <th>Estado</th>
+                    <th>Ciudad recogida</th>
+                    <th>Ciudad llegada</th>
+                    <th>Fecha de Creación</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for servicio in servicios %}
+                    <tr>
+                        <td>{{ servicio.id }}</td>
+                        <td>{{ servicio.id_cliente.nombres }}</td>
+                        <td>{{ servicio.id_mensajero.nombres }}</td>
+                        <td>{{ servicio.get_vehiculoSolicitado_display }}</td>
+                        <td>{{ servicio.get_estados_display }}</td>
+                        <td>{{ servicio.direccion_recojer.get_ciudad_display }}</td>
+                        <td>{{ servicio.direccion_destino.get_ciudad_display }}</td>
+                        <td>{{ servicio.fecha_creacion }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <nav>
+            <ul class="pagination">
+                {% if servicios.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?{% if request.GET %}{{ request.GET.urlencode }}&{% endif %}page={{ servicios.previous_page_number }}">Anterior</a>
+                    </li>
+                {% endif %}
+                {% for i in servicios.paginator.page_range %}
+                    <li class="page-item {% if servicios.number == i %}active{% endif %}">
+                        <a class="page-link" href="?{% if request.GET %}{{ request.GET.urlencode }}&{% endif %}page={{ i }}">{{ i }}</a>
+                    </li>
+                {% endfor %}
+                {% if servicios.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?{% if request.GET %}{{ request.GET.urlencode }}&{% endif %}page={{ servicios.next_page_number }}">Siguiente</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+{% endblock %}

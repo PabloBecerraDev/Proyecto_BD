@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}Crear Cliente{% endblock %}
+
+{% block content %}
+    <div class="container mt-4">
+        <div class="card">
+            <div class="card-header">
+                <h2>Gestionar Servicio {{ servicio.id }}</h2>
+            </div>
+            <div class="card-body">
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        {{ form.as_p }}
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 160px;">Actualizar Estado</button>
+                </form>
+                <hr>
+                <form method="post" action="{% url 'servicios_app:completarServicio' %}" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-success mt-3">Completar Servicio</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

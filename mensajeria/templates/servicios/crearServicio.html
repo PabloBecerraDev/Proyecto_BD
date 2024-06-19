@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+
+{% block title %}Crear Servicio{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <h1>Solicitar servicio</h1> <!-- Se ajustó el margen inferior a mb-2 -->
+    <form method="post">
+        {% csrf_token %}
+        {{ formset.management_form }}
+
+        <!-- Sección para Crear Servicio -->
+        <div class="form-section">
+            <h3>Crear Servicio</h3>
+            <div class="form-group">
+                {{ servicio_form.descripcion.label_tag }}
+                {{ servicio_form.descripcion }}
+                {% if servicio_form.errors.descripcion %}
+                <div class="error-message">{{ servicio_form.errors.descripcion }}</div>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ servicio_form.vehiculoSolicitado.label_tag }}
+                {{ servicio_form.vehiculoSolicitado }}
+                {% if servicio_form.errors.vehiculoSolicitado %}
+                <div class="error-message">{{ servicio_form.errors.vehiculoSolicitado }}</div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Sección para Dirección de Recogida -->
+        <div class="form-section">
+            <h3>Dirección de Recogida</h3>
+            <div class="form-group">
+                {{ formset.forms.0.direccion.label_tag }}
+                {{ formset.forms.0.direccion }}
+                {% if formset.forms.0.errors.direccion %}
+                <div class="error-message">{{ formset.forms.0.errors.direccion }}</div>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ formset.forms.0.ciudad.label_tag }}
+                {{ formset.forms.0.ciudad }}
+                {% if formset.forms.0.errors.ciudad %}
+                <div class="error-message">{{ formset.forms.0.errors.ciudad }}</div>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ formset.forms.0.departamento.label_tag }}
+                {{ formset.forms.0.departamento }}
+                {% if formset.forms.0.errors.departamento %}
+                <div class="error-message">{{ formset.forms.0.errors.departamento }}</div>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ formset.forms.0.codigo_postal.label_tag }}
+                {{ formset.forms.0.codigo_postal }}
+                {% if formset.forms.0.errors.codigo_postal %}
+                <div class="error-message">{{ formset.forms.0.errors.codigo_postal }}</div>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ formset.forms.0.pais.label_tag }}
+                {{ formset.forms.0.pais }}
+                {% if formset.forms.0.errors.pais %}
+                <div class="error-message">{{ formset.forms.0.errors.pais }}</div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Sección para Dirección de Destino -->
+        <div class="form-section">
+            <h3>Dirección de Destino</h3>
+            <div class="form-group">
+                {{ formset.forms.1.direccion.label_tag }}
+                {{ formset.forms.1.direccion }}
+                {% if formset.forms.1.errors.direccion %}
+                <div class="error-message">{{ formset.forms.1.errors.direccion }}</div>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ formset.forms.1.ciudad.label_tag }}
+                {{ formset.forms.1.ciudad }}
+                {% if formset.forms.1.errors.ciudad %}
+                <div class="error-message">{{ formset.forms.1.errors.ciudad }}</div>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ formset.forms.1.departamento.label_tag }}
+                {{ formset.forms.1.departamento }}
+                {% if formset.forms.1.errors.departamento %}
+                <div class="error-message">{{ formset.forms.1.errors.departamento }}</div>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ formset.forms.1.codigo_postal.label_tag }}
+                {{ formset.forms.1.codigo_postal }}
+                {% if formset.forms.1.errors.codigo_postal %}
+                <div class="error-message">{{ formset.forms.1.errors.codigo_postal }}</div>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ formset.forms.1.pais.label_tag }}
+                {{ formset.forms.1.pais }}
+                {% if formset.forms.1.errors.pais %}
+                <div class="error-message">{{ formset.forms.1.errors.pais }}</div>
+                {% endif %}
+            </div>
+        </div>
+        <br>
+        <button type="submit" class="mt-3">Guardar</button> <!-- Se ajustó el margen superior a mt-3 -->
+    </form>
+</div>
+{% endblock %}

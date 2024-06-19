@@ -1,0 +1,359 @@
+* {
+    box-sizing: border-box;
+}
+
+:root {
+    --color: #1e293b;
+    --c1: #fbda61;
+    --c2: #ff5acd;
+    --c3: #2563eb;
+    --gradient: linear-gradient(
+        60deg,
+        var(--c3),
+        var(--c2),
+        var(--c1),
+        var(--c2),
+        var(--c3)
+    );
+    --scale-start: 0.5;
+    --scale-end: 1.001;
+    --hover-offset: 5%;
+    --ease-elastic: linear(
+        0, 0.186 2.1%, 0.778 7.2%, 1.027 9.7%, 1.133, 1.212, 1.264, 1.292 15.4%,
+        1.296, 1.294, 1.285, 1.269 18.9%, 1.219 20.9%, 1.062 25.8%, 0.995 28.3%,
+        0.944 31.1%, 0.93, 0.921, 0.92 35.7%, 0.926, 0.94 39.7%, 1.001 47%, 1.014,
+        1.021 52.4%, 1.02 56.4%, 1 65.5%, 0.994 70.7%, 1.001 88.4%, 1
+    );
+    --ease-bounce-out: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@media (prefers-reduced-motion) {
+    :root {
+        --scale-start: var(--scale-end);
+        --ease-elastic: ease-out;
+        --ease-bounce-out: ease-out;
+        --hover-offset: 0;
+    }
+}
+
+body {
+    padding-inline: 1rem;
+    font-family: system-ui, sans-serif;
+    font-weight: 400;
+    font-size: 16px;;
+    text-align: center;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    line-height: 1.6;
+}
+
+header {
+    width: 100%;
+    background: var(--gradient);
+    color: white;
+    padding: 1rem;
+    margin-bottom: 2rem;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2rem;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+nav .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+nav .nav-links {
+    display: flex;
+    gap: 1rem;
+}
+
+nav .nav-links a {
+    color: white;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    transition: background 0.3s ease;
+}
+
+nav .nav-links a:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+section {
+    width: 100%;
+    max-width: 1200px;
+    padding: 2rem 1rem;
+    margin-bottom: 2rem;
+}
+
+section h2 {
+    margin-bottom: 1rem;
+    font-size: 2rem;
+    color: var(--color);
+}
+
+section p {
+    margin-bottom: 1rem;
+}
+
+.services, .testimonials, .contact {
+    background: #f1f5f9;
+    border-radius: 10px;
+}
+
+.testimonial {
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    background: white;
+    border-radius: 10px;
+}
+
+.contact form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.contact input, .contact textarea {
+    padding: 0.5rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.contact button {
+    padding: 0.7rem;
+    border: none;
+    border-radius: 5px;
+    background: var(--gradient);
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.contact button:hover {
+    background: var(--c3);
+}
+
+footer {
+    width: 100%;
+    background: var(--color);
+    color: white;
+    padding: 1rem;
+    margin-top: 2rem;
+    text-align: center;
+}
+
+.intro {
+    display: flex;
+    justify-content: center;
+    gap: 0.2em;
+    font-size: 0.5em;
+    margin-block-start: calc(50vh - 1ex);
+}
+
+.intro span {
+    display: inline-block;
+}
+
+.intro span:first-child {
+    transform-origin: right bottom;
+    animation: wave 250ms 1s ease 3;
+}
+
+.intro span:last-child {
+    animation: hover 500ms linear infinite;
+}
+
+.box {
+    margin-block: 80vh;
+}
+
+
+.text {
+    margin-inline: auto;
+    padding-block: 0.2em;
+    max-inline-size: 15ch;
+    text-wrap: balance;
+    background-image: var(--gradient);
+    background-size: 400%;
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    font-size: 100px;
+}
+
+@supports (animation-timeline: view()) {
+    .box {
+        animation: trigger steps(1) both, fade linear both;
+        animation-timeline: view();
+        animation-range: entry 80% contain 40%;
+    }
+
+    .text {
+        animation: pop-back 300ms var(--ease-bounce-out) forwards;
+    }
+
+    @container style(--animate: true) {
+        .text {
+            animation: pop 600ms var(--ease-elastic) forwards,
+                text-gradient 1s cubic-bezier(0, 0.55, 0.45, 1) forwards;
+        }
+    }
+}
+
+.smile {
+    width: 1em;
+    margin-inline: auto;
+    overflow: hidden;
+    white-space: nowrap;
+    margin-block-end: calc(50vh - 1ex);
+}
+
+.smile div {
+    display: flex;
+    animation: wink 1s steps(1) infinite;
+}
+
+.smile span {
+    display: inline-block;
+    width: 1em;
+}
+
+.profile {
+    display: inline-block;
+    margin-left: 20px;
+}
+
+.profile-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+@keyframes fade {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes trigger {
+    to {
+        --animate: true;
+    }
+}
+
+@keyframes pop {
+    from {
+        scale: var(--scale-start);
+    }
+    to {
+        scale: var(--scale-end);
+    }
+}
+
+@keyframes text-gradient {
+    100% {
+        background-position: 150% center;
+    }
+}
+
+@keyframes pop-back {
+    from {
+        scale: var(--scale-end);
+    }
+    to {
+        color: var(--color);
+        scale: var(--scale-start);
+    }
+}
+
+@keyframes wink {
+    0%,
+    100% {
+        translate: 0 0;
+    }
+    25%,
+    75% {
+        translate: -100% 0;
+    }
+    50% {
+        translate: -200% 0;
+    }
+}
+
+@keyframes wave {
+    50% {
+        rotate: 10deg;
+    }
+}
+
+@keyframes hover {
+    from,
+    to {
+        translate: 0 calc(var(--hover-offset) * -1);
+    }
+    50% {
+        translate: 0 var(--hover-offset);
+    }
+}
+
+.profile-menu {
+    display: none;
+    position: absolute;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+    top: 100%; /* Ajusta la posición del menú desplegable */
+    left: 0;
+}
+
+.profile-menu a {
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+    color: black;
+    transition: background-color 0.3s;
+}
+
+.profile-menu a:hover {
+    background-color: #f1f1f1;
+}
+
+/* Estilos para el link de perfil y su comportamiento */
+.profile-link {
+    cursor: pointer;
+}
+
+.profile {
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+}
+
+.profile-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* Mostrar el menú cuando el checkbox está marcado */
+.profile-menu-toggle:checked + .profile-link + .profile-menu {
+    display: block;
+}

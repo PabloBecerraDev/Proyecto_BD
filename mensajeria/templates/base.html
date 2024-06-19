@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Mi Sitio Web{% endblock %}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/stylesBase.css' %}">
+    <link rel="stylesheet" href="{% static 'css/stylesForm.css' %}">
+    
+    {% block extra_css %}
+    <!-- CSS adicional puede ser añadido aquí desde las plantillas hijas -->
+    {% endblock %}
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">Mensajería BBC</div>
+                <div class="nav-links">
+                    <a href="#about">Acerca de Nosotros</a>
+                    <a href="#services">Servicios</a>
+                    <a href="#testimonials">Testimonios</a>
+                    <a href="#contact">Contacto</a>
+                    {% if user.is_authenticated and user.is_mensajero %}
+                        <a href="{% url 'servicios_app:gestionarServicio' %}">Gestionar Servicio</a>
+                        <a href="{% url 'servicios_app:listar_servicios_mensajero' %}">Aceptar Servicio</a>
+                        <a href="{% url 'servicios_app:historialMensajero' %}">Historial de Servicios</a>
+                        <a href="{% url 'updateUser' user.id%}">Actualizar Perfil</a>
+                        <a href="{% url 'logout' %}">Logout</a>
+                        <div class="profile">
+                            {% if user.imagenPerfil %}
+                            <img src="{{ user.imagenPerfil.url }}" alt="Imagen de Perfil" class="profile-img" id="profile-img">
+                            {% else %}
+                            <img src="{% static 'images/defecto.png' %}" alt="Imagen de Perfil" class="profile-img" id="profile-img">
+                            {% endif %}
+                            
+                        </div>
+                    {% elif user.is_authenticated and user.is_cliente %}
+                        <a href="{% url 'servicios_app:crear_servicio' %}">Solicitar servicio</a>
+                        <a href="{% url 'servicios_app:listar_servicio' %}">Estado de servicio</a>
+                        <a href="{% url 'servicios_app:historialCliente' %}">Historial de Servicios</a>
+                       
+                        <a href="{% url 'updateUser' user.id%}">Actualizar Perfil</a>
+                        <a href="{% url 'logout' %}">Logout</a>
+                        <div class="profile">
+                            {% if user.imagenPerfil %}
+                                <img src="{{ user.imagenPerfil.url }}" alt="Profile Image" class="profile-img">
+                            {% else %}
+                                <img src="{% static 'images/defecto.png' %}" alt="Profile Image" class="profile-img">
+                            {% endif %}
+                        </div>
+                    {% elif user.is_authenticated and user.is_staff %}
+                    <a href="{% url 'list_user' %}">Ver Usuarios</a>
+                    <a href="{% url 'servicios_app:admin_servicio_list' %}">Ver domicilios</a>
+                    <a href="{% url 'updateUser' user.id%}">Actualizar Perfil</a>
+                    <a href="{% url 'logout' %}">Logout</a>
+                    <a href="#historial-servicios">Generar informe</a>
+                    <div class="profile">
+                        {% if user.imagenPerfil %}
+                            <img src="{{ user.imagenPerfil.url }}" alt="Profile Image" class="profile-img">
+                        {% else %}
+                            <img src="{% static 'images/defecto.png' %}" alt="Profile Image" class="profile-img">
+                        {% endif %}
+                    </div>
+
+
+                    {% else %}
+                        <a href="{% url 'create_cliente' %}">Registrate</a>
+                        <a href="{% url 'create_mensajero' %}">¡Trabaja con nosotros!</a>
+                        <a href="{% url 'login' %}">Login</a>
+                    {% endif %}
+                </div>
+            </div>
+        </nav>
+        <h1>Envíos rápidos y seguros a cualquier destino</h1>
+    </header>
+
+    <main>
+        {% block content %}
+        <!-- El contenido principal va aquí -->
+        {% endblock %}
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Mensajería Express. Todos los derechos reservados.</p>
+    </footer>
+
+    {% block extra_js %}
+    <!-- JavaScript adicional puede ser añadido aquí desde las plantillas hijas -->
+    {% endblock %}
+
+
+    
+</body>
+</html>
